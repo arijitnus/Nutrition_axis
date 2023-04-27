@@ -18,18 +18,19 @@ rescue$`biomass (mg)`
 
 
 res<-ggplot(rescue,aes(x=factor(microbiome,levels=level_order),y=`biomass (mg)`))+
-  geom_boxplot(aes(col=microbiome))+
-  geom_jitter(aes(col=microbiome),size=2.5,width = 0.4, alpha=0.5)+
+  geom_boxplot(aes(col=sulfur))+
+  geom_jitter(aes(col=sulfur),size=2.5,width = 0.4, alpha=0.5)+
   scale_color_manual(values = cols)+
   scale_fill_manual(values = cols)+
   theme_classic()+
   xlab("")+
-  ylab("Biomass in mg")+
+  ylab("Total biomass in mg")+
   theme(axis.text.x = element_text(size = 14),
         axis.text.y = element_text(size = 14),
         axis.title.y = element_text(size = 14),
         axis.title.x=element_text(size=14),
-        axis.line = element_line(colour="black", size = 0.7))+
+        axis.line = element_line(colour="black", size = 0.7),
+        strip.background = element_blank())+
   scale_y_continuous(limits = c(0, 22), expand = expansion(mult = c(0, 0)))
 q<-res+facet_grid(.~sulfur)
 q
@@ -39,11 +40,13 @@ ggsave(
   device = NULL,
   path = NULL,
   scale = 1,
-  width = 8,
-  height = 8,
+  width = 6,
+  height = 6,
   units = "in",
   dpi = 400,
 )
+
+
 
 shapiro.test(rescue$`biomass (mg)`)
 
