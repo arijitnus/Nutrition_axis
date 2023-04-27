@@ -14,8 +14,8 @@ level_order2<-c("Sufficient","Deficient")
 LA$Sulphur<-factor(LA$Sulphur,levels = level_order2)
 
 la<-ggplot(LA,aes(x=factor(SynCom,levels=level_order),y=`Area (Total)`))+
-  geom_boxplot(aes(col=SynCom))+
-  geom_jitter(aes(col=SynCom),size=2.5,width = 0.4, alpha=0.5)+
+  geom_boxplot(aes(col=Sulphur))+
+  geom_jitter(aes(col=Sulphur),size=2.5,width = 0.4, alpha=0.5)+
   scale_color_manual(values = cols)+
   scale_fill_manual(values = cols)+
   theme_classic()+
@@ -25,7 +25,8 @@ la<-ggplot(LA,aes(x=factor(SynCom,levels=level_order),y=`Area (Total)`))+
         axis.text.y = element_text(size = 14),
         axis.title.y = element_text(size = 14),
         axis.title.x=element_text(size=14),
-        axis.line = element_line(colour="black", size = 0.7))+
+        axis.line = element_line(colour="black", size = 0.7),
+        strip.background = element_blank())+
   scale_y_continuous(limits = c(0, 1), expand = expansion(mult = c(0, 0)))
 q<-la+facet_grid(.~Sulphur)
 q
@@ -35,23 +36,12 @@ ggsave(
   device = NULL,
   path = NULL,
   scale = 1,
-  width = 8,
-  height = 8,
+  width = 6,
+  height = 6,
   units = "in",
   dpi = 400,
 )
 dev.off()
-
-#statistical comparison for finding significance
-qqnorm(LA$`Area (Total)`)
-qqline(LA$`Area (Total)`)
-shapiro.test(LA$`Area (Total)`)#distribution is normal can perform ANOVA and then correct for FDR
-
-m<-aov(`Area (Total)`~SynCom * Sulphur,data = LA)
-summary.lm(m)
-m.tuk<-TukeyHSD(m)
-m.tuk
-#The summary says only the active vs heat killsed in deficient condition is significant
 
 
 
