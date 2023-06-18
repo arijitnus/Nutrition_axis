@@ -53,15 +53,6 @@ hm<-Heatmap(as.matrix(input3),col=col_fun,cluster_rows = F,cluster_columns = F,r
         left_annotation = ha,
         top_annotation = ha2)
 hm
-ggsave(
-  "Heatmap_MAGs_sulfur_genes.tiff",
-  plot = last_plot(),
-  device = NULL,
-  path = NULL,
-  scale = 1,
-  width = 6,
-  height = 6,
-  units = "in",
-  dpi = 400,
-)
+tiff("HM_MAGs_sulfur.tiff", width = 6, height = 6, units = "in", res = 300)
+hm
 dev.off()
