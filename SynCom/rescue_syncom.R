@@ -19,7 +19,7 @@ rescue$`biomass (mg)`
 
 res<-ggplot(rescue,aes(x=factor(microbiome,levels=level_order),y=`biomass (mg)`))+
   geom_boxplot(aes(col=sulfur))+
-  geom_jitter(aes(col=sulfur),size=2.5,width = 0.4, alpha=0.5)+
+  geom_jitter(aes(col=sulfur,shape=Experiment),size=2.5,width = 0.4, alpha=0.5)+
   scale_color_manual(values = cols)+
   scale_fill_manual(values = cols)+
   theme_classic()+
