@@ -70,3 +70,25 @@ ggsave(
 )
 dev.off()
 
+
+#stats
+m<-aov(`root length (cm)`~microbiome*Sulfur+Experiment,data = dat)#Normally distributed
+m.tuk<-TukeyHSD(m)
+m.tuk$`microbiome:Sulfur`
+
+diff         lwr         upr       p adj
+Heat killed:S15-Active:S15        -0.401240 -0.75565222 -0.04682778 0.021314127
+Active:S1500-Active:S15           -0.183385 -0.53779722  0.17102722 0.511458582
+Heat killed:S1500-Active:S15       0.085640 -0.26877222  0.44005222 0.914583316
+Active:S1500-Heat killed:S15       0.217855 -0.13655722  0.57226722 0.361566534
+Heat killed:S1500-Heat killed:S15  0.486880  0.13246778  0.84129222 0.003827143
+Heat killed:S1500-Active:S1500     0.269025 -0.08538722  0.62343722 0.191062900
+
+
+
+
+
+
+
+
+
