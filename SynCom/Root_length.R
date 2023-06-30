@@ -14,20 +14,20 @@ m.tuk<-TukeyHSD(m)
 m.tuk$`Microbiome:Sulphur`
 #write down all the results of comparisons
 write.table(m.tuk$`Microbiome:Sulphur`,"tukey_root_length.tsv",sep = "\t")
-#diff         lwr        upr
-#Heat killed:Deficient-Active:Deficient       -0.47592 -0.98969906 0.03785906
-#Active:Sufficient-Active:Deficient           -0.23088 -0.74465906 0.28289906
-#Heat killed:Sufficient-Active:Deficient       0.12484 -0.38893906 0.63861906
-#Active:Sufficient-Heat killed:Deficient       0.24504 -0.26873906 0.75881906
-#Heat killed:Sufficient-Heat killed:Deficient  0.60076  0.08698094 1.11453906
-#Heat killed:Sufficient-Active:Sufficient      0.35572 -0.15805906 0.86949906
-#p adj
-#Heat killed:Deficient-Active:Deficient       0.07445553
-#Active:Sufficient-Active:Deficient           0.58451867
-#Heat killed:Sufficient-Active:Deficient      0.89743202
-#Active:Sufficient-Heat killed:Deficient      0.53788287
-#Heat killed:Sufficient-Heat killed:Deficient 0.01930009
-#Heat killed:Sufficient-Active:Sufficient     0.23578662
+#diff         lwr         upr
+#Heat killed:S15-Active:S15        -0.401240 -0.74822816 -0.05425184
+#Active:S1500-Active:S15           -0.183385 -0.53037316  0.16360316
+#Heat killed:S1500-Active:S15       0.085640 -0.26134816  0.43262816
+#Active:S1500-Heat killed:S15       0.217855 -0.12913316  0.56484316
+#Heat killed:S1500-Heat killed:S15  0.486880  0.13989184  0.83386816
+#Heat killed:S1500-Active:S1500     0.269025 -0.07796316  0.61601316
+                                        p adj
+#Heat killed:S15-Active:S15        0.018160012
+#Active:S1500-Active:S15           0.492504008
+#Heat killed:S1500-Active:S15      0.909276958
+#Active:S1500-Heat killed:S15      0.342395482
+#Heat killed:S1500-Heat killed:S15 0.003112208
+#Heat killed:S1500-Active:S1500    0.175946305
 
 #P-adj for syncom deficient active vs heat killed is 0.07
 
@@ -71,18 +71,7 @@ ggsave(
 dev.off()
 
 
-#stats
-m<-aov(`root length (cm)`~microbiome*Sulfur+Experiment,data = dat)#Normally distributed
-m.tuk<-TukeyHSD(m)
-m.tuk$`microbiome:Sulfur`
 
-diff         lwr         upr       p adj
-Heat killed:S15-Active:S15        -0.401240 -0.75565222 -0.04682778 0.021314127
-Active:S1500-Active:S15           -0.183385 -0.53779722  0.17102722 0.511458582
-Heat killed:S1500-Active:S15       0.085640 -0.26877222  0.44005222 0.914583316
-Active:S1500-Heat killed:S15       0.217855 -0.13655722  0.57226722 0.361566534
-Heat killed:S1500-Heat killed:S15  0.486880  0.13246778  0.84129222 0.003827143
-Heat killed:S1500-Active:S1500     0.269025 -0.08538722  0.62343722 0.191062900
 
 
 
