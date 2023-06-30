@@ -50,7 +50,26 @@ ggsave(
 dev.off()
 
 
+m<-aov(shoot_area~microbiome*Sulfur+Experiment,data = LA)
+m.tuk<-TukeyHSD(m)
+m.tuk$`microbiome:Sulfur`
+#write down all the results of comparisons
+write.table(m.tuk$`Microbiome:Sulphur`,"tukey_root_length.tsv",sep = "\t")
 
+#diff          lwr         upr
+#Heat killed:S1500-Active:S1500    -0.122081 -0.233337182 -0.01082482
+#Active:S15-Active:S1500           -0.020100 -0.131356182  0.09115618
+#Heat killed:S15-Active:S1500      -0.331300 -0.442556182 -0.22004382
+#Active:S15-Heat killed:S1500       0.101981 -0.009275182  0.21323718
+#Heat killed:S15-Heat killed:S1500 -0.209219 -0.320475182 -0.09796282
+#Heat killed:S15-Active:S15        -0.311200 -0.422456182 -0.19994382
+#p adj
+#Heat killed:S1500-Active:S1500    2.692317e-02
+#Active:S15-Active:S1500           9.614314e-01
+#Heat killed:S15-Active:S1500      1.112038e-08
+#Active:S15-Heat killed:S1500      8.220129e-02
+#Heat killed:S15-Heat killed:S1500 7.373388e-05
+#Heat killed:S15-Active:S15        4.541424e-08
 
 
 
