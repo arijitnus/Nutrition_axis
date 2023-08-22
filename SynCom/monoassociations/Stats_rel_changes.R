@@ -16,9 +16,9 @@ for (st in mstrains) {
   hkavgbm<-mean(mdf[mdf$Microbiome=="Heat killed",]$biomass)
   hkavgsa<-mean(mdf[mdf$Microbiome=="Heat killed",]$shoot_area)
   hkavgrl<-mean(mdf[mdf$Microbiome=="Heat killed",]$root_length)
-  mdf$rbm<-mdf$biomass-hkavgbm
-  mdf$rsa<-mdf$shoot_area-hkavgsa
-  mdf$rrl<-mdf$root_length-hkavgrl
+  mdf$rbm<-(mdf$biomass-hkavgbm)/hkavgbm
+  mdf$rsa<-(mdf$shoot_area-hkavgsa)/hkavgsa
+  mdf$rrl<-(mdf$root_length-hkavgrl)/hkavgrl
   temp <- data.frame(Strains = st,rel_bm=mdf$rbm,
                      rel_sa=mdf$rsa,rel_rl=mdf$rrl,Microbiome=mdf$Microbiome
                      )
@@ -33,6 +33,8 @@ write.table(Res_filt,"rel_increase.tsv",sep = "\t")
 
 #Now from this relative increase, we need to perform statistical test for 
 #significant differences from SPAF18 for each of the strains for biomass
+Res_filt<-read_excel("/Users/arijitmukherjee/Downloads/combined_rel_increase.xlsx",sheet = "Sheet1",col_names = T,skip = 0)
+Res_filt
 Res<-NULL
 mstrains <- Res_filt$Strains%>%unique()
 mstrains<-mstrains[-19]
@@ -41,9 +43,9 @@ mstrains
 for (st in mstrains) {
   mdf<-subset(Res_filt,Strains%in%c(st,"SPAF18"))
   mdf$Strains<-as.factor(mdf$Strains)
-  x<-subset(mdf,Strains==st)$rel_rl
-  y<-subset(mdf,Strains=='SPAF18')$rel_rl
-  m1 <- car::leveneTest(rel_rl~Strains,mdf)
+  x<-subset(mdf,Strains==st)$total_rel
+  y<-subset(mdf,Strains=='SPAF18')$total_rel
+  m1 <- car::leveneTest(total_rel~Strains,mdf)
   pvalue <- m1$`Pr(>F)`[1]
   if(pvalue < 0.05){
     m1 <- t.test(x,y,exact = F,var.equal = F)
@@ -67,7 +69,7 @@ Res
 Res$padj<-p.adjust(Res$p.value,method = "fdr")
 Res$padjW<-p.adjust(Res$p.valueW,method = "fdr")
 Res
-write.table(Res,"rootlength_stats_tests_rel_changes.tsv",sep = "\t")
+write.table(Res,"perc_rel_changes_stats.tsv",sep = "\t")
 
 
 
