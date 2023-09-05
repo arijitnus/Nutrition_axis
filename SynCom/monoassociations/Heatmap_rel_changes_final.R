@@ -9,15 +9,16 @@ Dat_bm<-Dat%>%group_by(Strains)%>%summarise(avg_bm=mean(rel_bm))
 Dat_bm
 Dat_sa<-Dat%>%group_by(Strains)%>%summarise(avg_sa=mean(rel_sa))
 Dat_rl<-Dat%>%group_by(Strains)%>%summarise(avg_rl=mean(rel_rl))
-df<-cbind(Dat_bm,Dat_sa,Dat_rl)
-df<-df[,-c(3,5)]
+Dat_ra<-Dat%>%group_by(Strains)%>%summarise(avg_ra=mean(rel_ra))
+df<-cbind(Dat_bm,Dat_sa,Dat_rl,Dat_ra)
+df<-df[,-c(3,5,7)]
 df
 
 class(df)
 rownames(df)<-df$Strains
 df<-df[,-1]
 hm2<-Heatmap(df,row_dend_side = "right")
-
+hm2
 #save this image too for further analyses
 pdf("heatmap_rel_change_dendrogram.pdf",         # File name
     width = 3, height = 8, # Width and height in inches
@@ -38,7 +39,7 @@ dev.off()
 vector<-c("P32B1","3C2","SPAF18","6A2","8X4",
           "10B2","P31D","9B1","7F21","6A1",
           "3C1","1A1","8X1","9B2",
-          "8A2","9X2","9F3","P33G","4C")
+          "8A2","P33G","9X2","9F3","4C")
 
 hist(as.matrix(df))
 df<-as.matrix(df)
@@ -62,7 +63,7 @@ for (i in 1:nrow(df)) {
 result_matrix
 
 rownames(result_matrix)<-rownames(df)
-colnames(result_matrix)<-c("Total biomass","Shoot area","Root length")
+colnames(result_matrix)<-c("Total biomass","Shoot area","Root length","Root network")
 result_matrix
 library(RColorBrewer)
 YlOrBr <- brewer.pal(6,"YlOrBr")
@@ -73,7 +74,7 @@ hm<-Heatmap(result_matrix,name = "hm", col = YlOrBr,show_column_names = T,rect_g
             width = 4,height = 4) 
 hm
 
-pdf("heatmap_phenotypes_monoassociation_rel_changes_reordered.pdf",         # File name
+pdf("heatmap_phenotypes_monoassociation_rel_changes_reordered_final.pdf",         # File name
     width = 3, height = 8, # Width and height in inches
     bg = "white",          # Background color
     colormodel = "cmyk",    # Color model (cmyk is required for most publications)
