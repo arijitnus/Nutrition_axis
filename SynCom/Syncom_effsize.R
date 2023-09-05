@@ -3,15 +3,23 @@
 #First calculate the effect size based on the biomass for active SPAF18 treatment
 library(readxl)
 library(effsize)
-biomass<-read_excel("/Users/arijitmukherjee/Documents/Sulfur_manuscript_II/effsize_input_SPAF18.xlsx",sheet = "biomass",col_names = T,skip = 0)
-LA<-read_excel("/Users/arijitmukherjee/Documents/Sulfur_manuscript_II/effsize_input_SPAF18.xlsx",sheet = "shoot_area",col_names = T,skip = 0)
-rl<-read_excel("/Users/arijitmukherjee/Documents/Sulfur_manuscript_II/effsize_input_SPAF18.xlsx",sheet = "root_length",col_names = T,skip = 0)
+biomass<-read_excel("/Users/arijitmukherjee/Downloads/effsize_input_SPAF18.xlsx",sheet = "biomass",col_names = T,skip = 0)
+LA<-read_excel("/Users/arijitmukherjee/Downloads/effsize_input_SPAF18.xlsx",sheet = "shoot_area",col_names = T,skip = 0)
+rl<-read_excel("/Users/arijitmukherjee/Downloads/effsize_input_SPAF18.xlsx",sheet = "root_length",col_names = T,skip = 0)
+ra<-read_excel("/Users/arijitmukherjee/Downloads/effsize_input_SPAF18.xlsx",sheet = "root_area",col_names = T,skip = 0)
 
 LA$sulfur<-as.factor(LA$sulfur)
 LA$microbiome<-as.factor(LA$microbiome)
 
 rl$sulfur<-as.factor(rl$sulfur)
 rl$microbiome<-as.factor(rl$microbiome)
+
+ra$sulfur<-as.factor(ra$sulfur)
+ra$microbiome<-as.factor(ra$microbiome)
+
+biomass$sulfur<-as.factor(biomass$sulfur)
+biomass$microbiome<-as.factor(biomass$microbiome)
+
 #calculate the effect size for these three parameters across the sulphur deficient and sufficient conditions
 biomass_suff<-subset(biomass,sulfur=="Sufficient")
 biomass_def<-subset(biomass,sulfur=="Deficient")
@@ -32,7 +40,7 @@ LA_def_hk<-subset(LA,sulfur=="Deficient"&microbiome=="Heat killed")
 
 LA_suff_eff<-cohen.d(LA_suff_active$area,LA_suff_hk$area)
 LA_def_eff<-cohen.d(LA_def_active$area,LA_def_hk$area)
-  
+
 #calculate for root length
 rl_suff_hk<-subset(rl,sulfur=="Sufficient"&microbiome=="Heat killed")
 rl_suff_active<-subset(rl,sulfur=="Sufficient"&microbiome=="Active")
@@ -42,27 +50,39 @@ rl_def_hk<-subset(rl,sulfur=="Deficient"&microbiome=="Heat killed")
 rl_suff_eff<-cohen.d(rl_suff_active$root_length,rl_suff_hk$root_length)
 rl_def_eff<-cohen.d(rl_def_active$root_length,rl_def_hk$root_length)
 
+#calculate for root area
+ra_suff_hk<-subset(ra,sulfur=="Sufficient"&microbiome=="Heat killed")
+ra_suff_active<-subset(ra,sulfur=="Sufficient"&microbiome=="Active")
+ra_def_active<-subset(ra,sulfur=="Deficient"&microbiome=="Active")
+ra_def_hk<-subset(ra,sulfur=="Deficient"&microbiome=="Heat killed")
+
+ra_suff_eff<-cohen.d(ra_suff_active$root_area,ra_suff_hk$root_area)
+ra_def_eff<-cohen.d(ra_def_active$root_area,ra_def_hk$root_area)
+
+
+
 
 ###Create dataframe based on this 
 df<-data.frame(biomass=c(biomass_suff_eff$estimate,biomass_def_eff$estimate),
                LA=c(LA_suff_eff$estimate,LA_def_eff$estimate),
-               rl=c(rl_suff_eff$estimate,rl_def_eff$estimate))
+               rl=c(rl_suff_eff$estimate,rl_def_eff$estimate),
+               ra=c(ra_suff_eff$estimate,ra_def_eff$estimate))
 
 rownames(df)<-c("Sufficient","Deficient")
 df
 
 library(tidyr)
 #pivot the data frame into a long format
-df2<-df %>% pivot_longer(cols=c('biomass', 'LA','rl'),
+df2<-df %>% pivot_longer(cols=c('biomass', 'LA','rl','ra'),
                          names_to='vars',
                          values_to='effsize')
 df2
 
 df2$vars<-as.factor(df2$vars)
 df2$vars
-df2$sulphur<-c(rep("Sufficient",3),rep("Deficient",3))
+df2$sulphur<-c(rep("Sufficient",4),rep("Deficient",4))
 df2$sulphur<-as.factor(df2$sulphur)
-cols<-c("#CC0066","#4C9900","#606060")
+cols<-c("#CC0066","#4C9900","#606060","#FF8000")
 level_order<-c("Sufficient","Deficient")
 df2$sulphur<-factor(df2$sulphur,levels = level_order)
 
@@ -84,7 +104,7 @@ effsize_syn<-ggplot(df2,aes(x=sulphur,y=effsize,group=vars))+
 q<-effsize_syn+scale_y_continuous(limits = c(-2, 8), expand = expansion(mult = c(0, 0)))
 q
 ggsave(
-  "effsize_syncom.tiff",
+  "effsize_syncom_revised.tiff",
   plot = last_plot(),
   device = NULL,
   path = NULL,
@@ -101,4 +121,3 @@ dev.off()
 
 
 
-  
