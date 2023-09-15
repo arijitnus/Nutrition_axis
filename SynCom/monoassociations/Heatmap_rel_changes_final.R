@@ -10,8 +10,11 @@ Dat_bm
 Dat_sa<-Dat%>%group_by(Strains)%>%summarise(avg_sa=mean(rel_sa))
 Dat_rl<-Dat%>%group_by(Strains)%>%summarise(avg_rl=mean(rel_rl))
 Dat_ra<-Dat%>%group_by(Strains)%>%summarise(avg_ra=mean(rel_ra))
-df<-cbind(Dat_bm,Dat_sa,Dat_rl,Dat_ra)
-df<-df[,-c(3,5,7)]
+Dat_lr<-Dat%>%group_by(Strains)%>%summarise(avg_lr=mean(rel_lr))
+
+
+df<-cbind(Dat_bm,Dat_sa,Dat_rl,Dat_ra,Dat_lr)
+df<-df[,-c(3,5,7,9)]
 df
 
 class(df)
@@ -20,7 +23,7 @@ df<-df[,-1]
 hm2<-Heatmap(df,row_dend_side = "right")
 hm2
 #save this image too for further analyses
-pdf("heatmap_rel_change_dendrogram.pdf",         # File name
+pdf("heatmap_rel_change_dendrogram_final.pdf",         # File name
     width = 3, height = 8, # Width and height in inches
     bg = "white",          # Background color
     colormodel = "cmyk",    # Color model (cmyk is required for most publications)
@@ -31,19 +34,18 @@ hm2
 dev.off()
 
 
-
-#This gives the dendrogram of unsupervised clusters
-
-
 #The order of the vector for all the strains based on their phenotypes:
-vector<-c("P32B1","3C2","SPAF18","6A2","8X4",
-          "10B2","P31D","9B1","7F21","6A1",
-          "3C1","1A1","8X1","9B2",
-          "8A2","P33G","9X2","9F3","4C")
+vector<-c("P32B1","3C2","SPAF18","6A2","10B2",
+          "P31D","8X4","9B1","7F21","6A1",
+          "3C1","1A1","8X1",
+          "8A2","P33G","9B2","9X2","4C","9F3")
 
 hist(as.matrix(df))
 df<-as.matrix(df)
-ranges <- c(-0.1, 0, 0.25, 0.5, 1, 1.5,2)
+
+min(df)
+
+ranges <- c(-0.5, 0, 0.25, 0.5, 1, 1.5,2)
 characters <- c("A","B","C","D","E","F")
 
 
@@ -63,7 +65,7 @@ for (i in 1:nrow(df)) {
 result_matrix
 
 rownames(result_matrix)<-rownames(df)
-colnames(result_matrix)<-c("Total biomass","Shoot area","Root length","Root network")
+colnames(result_matrix)<-c("Total biomass","Shoot area","Root length","Root network","Lateral roots")
 result_matrix
 library(RColorBrewer)
 YlOrBr <- brewer.pal(6,"YlOrBr")
