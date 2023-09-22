@@ -41,3 +41,25 @@ ggsave(
   dpi = 400,
 )
 dev.off()
+
+#calculate growth params for all strains using these packages
+library(dplyr)
+library(reshape2)
+library(ggplot2)
+library(growthcurver)
+library(purrr)
+
+growth<-read_excel("/Users/arijitmukherjee/Downloads/growth_curve_syncoms.xlsx",sheet = "Sheet1",col_names = T,skip = 0)
+growth
+#filter the data for 30hrs=1800 mins for logistic growth curve This is based on 
+#information of plotting the data previously
+
+growth.values.plate <- SummarizeGrowthByPlate(growth_df)
+growth.values.plate
+write.table(growth.values.plate,"growth-values-plate.tsv",sep = "\t")
+
+
+
+
+
+
