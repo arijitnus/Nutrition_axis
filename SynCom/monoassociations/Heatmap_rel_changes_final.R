@@ -17,6 +17,12 @@ df<-cbind(Dat_bm,Dat_sa,Dat_rl,Dat_ra,Dat_lr)
 df<-df[,-c(3,5,7,9)]
 df
 
+#Estimate the optimal number of clusters
+library(NbClust)
+NbClust(df, method = 'complete', index = 'all')$Best.nc
+#According to majority rule, the best number of cluster is 3
+
+
 class(df)
 rownames(df)<-df$Strains
 df<-df[,-1]
