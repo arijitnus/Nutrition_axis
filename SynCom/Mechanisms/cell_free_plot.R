@@ -6,7 +6,7 @@ library(dplyr)
 rescue<-read_excel("/Users/arijitmukherjee/Downloads/plot.xlsx",sheet = "rel_increase",col_names = T,skip = 0)
 head(rescue)
 
-rescue$Sulfur<-as.factor(rescue$Sulfur)
+rescue$`S-medium`<-as.factor(rescue$`S-medium`)
 rescue$Treatment<-as.factor(rescue$Treatment)
 #rescue$label<-as.factor(rescue$label)
 cols=c('#000000',"#DC143C")
@@ -14,16 +14,12 @@ cols=c('#000000',"#DC143C")
 level_order<-c("Active_SPAF18","cell_free_extract")
 level_order2<-c("Sufficient","Deficient")
 
-rescue$Sulfur<-factor(rescue$Sulfur,levels = level_order2)
-rescue$Treatment<-factor(rescue$Treatment,levels = level_order)
-rescue$avg_biomass
-rescue
 rescue$Experiment<-as.factor(rescue$Experiment)
 rescue
 
-rescue$Treatment
 
-cs<-ggplot(rescue,aes(x=factor(Sulfur,levels=level_order2),y=Relative_increase))+
+
+cs<-ggplot(rescue,aes(x=factor(`S-medium`,levels=level_order2),y=Relative_increase))+
   geom_boxplot(aes(col=Treatment),lwd=0.8)+
   geom_jitter(aes(col=Treatment,shape=Experiment),size=2.5,width = 0.4, alpha=0.5)+
   scale_color_manual(values = cols)+
@@ -43,11 +39,21 @@ rescue$Relative_increase
 
 shapiro.test(rescue$Relative_increase)#normal distribution
 #post hoc tukey test
+rescue$`S-medium`
 
+rescue$Sulfur<-rescue$`S-medium`
 #perform the tukey test
 m<-aov(Relative_increase~Treatment*Sulfur+Experiment,data = rescue)
 m.tuk<-TukeyHSD(m)
 m.tuk$`Treatment:Sulfur`
+
+#p adj
+#cell_free_extract:Deficient-Active_SPAF18:Deficient      3.175752e-01
+#Active_SPAF18:Sufficient-Active_SPAF18:Deficient         9.437623e-06
+#cell_free_extract:Sufficient-Active_SPAF18:Deficient     1.691359e-06
+#Active_SPAF18:Sufficient-cell_free_extract:Deficient     4.617060e-03
+#cell_free_extract:Sufficient-cell_free_extract:Deficient 1.024163e-03
+#cell_free_extract:Sufficient-Active_SPAF18:Sufficient    9.493067e-01
 
 ggsave(
   "relative_increase_final.tiff",
