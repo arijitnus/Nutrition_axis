@@ -14,7 +14,7 @@ dat<-as.matrix(dat)
 col_fun<-colorRamp2(c(-1, 0, 1), c("blue", "white", "red"))
 hm<-Heatmap(dat, cluster_rows = F,cluster_columns = F,col = col_fun,rect_gp = gpar(col="black"),
         cell_fun = function(j, i, x, y, width, height, fill) {
-          grid.text(sprintf("%.1f", dat[i, j]), x, y, gp = gpar(fontsize = 24))
+          grid.text(sprintf("%.2f", dat[i, j]), x, y, gp = gpar(fontsize = 24))
         })
 hm
 
