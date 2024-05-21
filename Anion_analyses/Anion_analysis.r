@@ -18,7 +18,7 @@ sulfur<-ggplot(data,aes(x=Genotype,y=`Sulphate (uM/mgDM)`))+
   scale_fill_manual(values = cols)+
   theme_classic()+
   xlab("")+
-  ylab(expression("Shoot sulphate content (" * mu*"M per mg of dry biomass)"))+
+  ylab(expression("Shoot sulphate content (" * mu*"mol per mg of dry biomass)"))+
   theme(axis.text.x = element_text(size = 14,angle = 30,hjust = 1),
         axis.text.y = element_text(size = 14),
         axis.title.y = element_text(size = 14),
@@ -68,7 +68,7 @@ phosphate<-ggplot(data,aes(x=Genotype,y=`Phosphate (uM/mg DM)`))+
   scale_fill_manual(values = cols)+
   theme_classic()+
   xlab("")+
-  ylab(expression("Shoot phosphate content (" * mu*"M per mg of dry biomass)"))+
+  ylab(expression("Shoot phosphate content (" * mu*"mol per mg of dry biomass)"))+
   theme(axis.text.x = element_text(size = 14,angle = 30,hjust = 1),
         axis.text.y = element_text(size = 14),
         axis.title.y = element_text(size = 14),
@@ -130,7 +130,7 @@ nitrate<-ggplot(data,aes(x=Genotype,y=`Nitrate (uM/mg DM)`))+
   scale_fill_manual(values = cols)+
   theme_classic()+
   xlab("")+
-  ylab(expression("Shoot nitrate content (" * mu*"M per mg of dry biomass)"))+
+  ylab(expression("Shoot nitrate content (" * mu*"mol per mg of dry biomass)"))+
   theme(axis.text.x = element_text(size = 14,angle = 30,hjust = 1),
         axis.text.y = element_text(size = 14),
         axis.title.y = element_text(size = 14),
