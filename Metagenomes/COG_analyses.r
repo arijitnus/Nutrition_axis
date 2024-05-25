@@ -258,12 +258,7 @@ dev.off()
 
 
 
-COG_counts<-loadMeta()
 
-#the count matrix must be provided as a tab delimited file
-dataDirectory <- system.file("extdata", package = "metagenomeSeq")
-lung = loadMeta(file.path(dataDirectory, "CHK_NAME.otus.count.csv"))
-lung$taxa
 
 
 
