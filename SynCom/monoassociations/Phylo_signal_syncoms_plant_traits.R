@@ -11,16 +11,17 @@ library(readxl)
 library(dplyr)
 library(ggplot2)
 
-Dat<-read_excel("/Users/arijitmukherjee/Downloads/rel_inc_ind_strains.xlsx",sheet = "Sheet1",col_names = T,skip = 0)
+Dat<-read_excel("/Users/arijitmukherjee/Downloads/hm_all_pheno.xlsx",sheet = "Sheet1",col_names = T,skip = 0)
 Dat
 
 Dat_bm<-Dat%>%group_by(Strains)%>%summarise(avg_bm=mean(rel_bm))
 Dat_bm
 Dat_sa<-Dat%>%group_by(Strains)%>%summarise(avg_sa=mean(rel_sa))
 Dat_rl<-Dat%>%group_by(Strains)%>%summarise(avg_rl=mean(rel_rl))
-Dat_ra<-Dat%>%group_by(Strains)%>%summarise(avg_ra=mean(rel_ra))
-df<-cbind(Dat_bm,Dat_sa,Dat_rl,Dat_ra)
-df<-df[,-c(3,5,7)]
+Dat_rn<-Dat%>%group_by(Strains)%>%summarise(avg_rn=mean(rel_rn))
+Dat_lr<-Dat%>%group_by(Strains)%>%summarise(avg_lr=mean(rel_lr))
+df<-cbind(Dat_bm,Dat_sa,Dat_rl,Dat_rn,Dat_lr)
+df<-df[,-c(3,5,7,9)]
 df
 
 rownames(df)<-df$Strains
@@ -43,31 +44,38 @@ df_ord
 #biomass lambda
 res_bm<-phylosig(tree,df$avg_bm, method="lambda", test=TRUE, nsim=999)
 res_bm
-#Phylogenetic signal lambda : 6.6107e-05 
-#logL(lambda) : -13.285 
-#LR(lambda=0) : -0.000651594 
+#Phylogenetic signal lambda : 7.33137e-05 
+#logL(lambda) : 8.96671 
+#LR(lambda=0) : -0.000894062 
 #P-value (based on LR test) : 1 
 
 res_sa<-phylosig(tree,df$avg_sa, method="lambda", test=TRUE, nsim=999)
 res_sa
-#Phylogenetic signal lambda : 6.6107e-05 
-#logL(lambda) : -12.3737 
-#LR(lambda=0) : -0.000135359 
-#P-value (based on LR test) : 1
+#Phylogenetic signal lambda : 7.33137e-05 
+#logL(lambda) : 7.01161 
+#LR(lambda=0) : -0.000768907 
+#P-value (based on LR test) : 1 
 
 res_rl<-phylosig(tree,df$avg_rl, method="lambda", test=TRUE, nsim=999)
 res_rl
+#Phylogenetic signal lambda : 7.33137e-05 
+#logL(lambda) : 20.7209 
+#LR(lambda=0) : -0.000455995 
+#P-value (based on LR test) : 1
 
-#Phylogenetic signal lambda : 6.6107e-05 
-#logL(lambda) : 0.559936 
-#LR(lambda=0) : -0.000546372 
+
+res_rn<-phylosig(tree,df$avg_rn, method="lambda", test=TRUE, nsim=999)
+res_rn
+#Phylogenetic signal lambda : 7.33137e-05 
+#logL(lambda) : 12.0405 
+#LR(lambda=0) : -0.000562924 
 #P-value (based on LR test) : 1 
 
-res_ra<-phylosig(tree,df$avg_ra, method="lambda", test=TRUE, nsim=999)
-res_ra
-#Phylogenetic signal lambda : 6.6107e-05 
-#logL(lambda) : 1.53987 
-##LR(lambda=0) : -0.000561131 
+res_lr<-phylosig(tree,df$avg_lr, method="lambda", test=TRUE, nsim=999)
+res_lr
+#Phylogenetic signal lambda : 7.33137e-05 
+#logL(lambda) : 4.41434 
+#LR(lambda=0) : -0.000703684 
 #P-value (based on LR test) : 1 
 
 
