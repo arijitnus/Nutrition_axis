@@ -1,4 +1,4 @@
-#Fisher's exact test for pathway enrichment: Adapted from # Gaia Cortinovis
+Fisher's exact test for pathway enrichment: Adapted from # Gaia Cortinovis
 #https://www.researchgate.net/post/How_can_I_perform_many_of_Fishers_exact_tests_for_a_big_number_of_genes_with_R
 #Read in the freq dataframe for the dysregulated genes and then perform Fisher's test
 library(readxl)
@@ -7,6 +7,7 @@ head(Data)
 
 #if(!require(psych)){install.packages("psych")}
 library(psych)
+library(dplyr)
 
 str(Data)
 Data$Fisher.p   = NA
@@ -28,6 +29,9 @@ library(ggplot2)
 library(dplyr)
 Data_sig$proportion<-Data_sig$count_MSA/396
 write.table(Data_sig,"sig_data.tsv",sep = "\t")
+
+Data_sig<-Data_sig[-c(9,10),]# remove general functions and functions unknown
+
 
 q<-ggplot(data=Data_sig, aes(x=reorder(description,proportion), y=proportion))+
   geom_bar(stat="identity", width=0.7,fill="steelblue")+
