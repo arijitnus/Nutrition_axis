@@ -1,0 +1,36 @@
+﻿compounds,names,max flux
+cpd00035,alanine,0.075
+cpd00033,glycine,1000
+cpd00054,serine,0.075
+cpd00159,lactic acid,0.15
+cpd00036,succinic acid,0.15
+cpd00082,fructose,0.15
+cpd00027,glucose,0.15
+cpd00076,sucrose,0.15
+cpd11822,inositol myo-,1000
+cpd00063,Calcium (2+),1000
+cpd00099,Chloride,1000
+cpd00149,Cobalt (2+),1000
+cpd00058,Copper (2+),1000
+cpd10515,Iron (II),1000
+cpd10516,Iron (III),1000
+cpd00001,Water,1000
+cpd00067,H+,1000
+cpd00205,Potassium,1000
+cpd00254,Magnesium (2+),1000
+cpd00030,Manganese (2+),1000
+cpd11574,Molybdate,1000
+cpd00971,Sodium,1000
+cpd00013,Ammonium,1000
+cpd00007,Oxygen,1000
+cpd00009,Phosphate,1000
+cpd00048,Sulfate,1000
+cpd00034,Zinc (2+),1000
+cpd00209,Nitrate,1000
+cpd09225,Boron,1000
+cpd00305,Thiamin,1000
+cpd00215,Pyridoxal,1000
+cpd00218,Nicotinic acid,1000
+cpd34181,Na EDTA,0.15
+cpd05147,KI,1000
+cpd00137,Citric acid,0.15
