@@ -1,0 +1,7 @@
+#Code for creating the models
+#1. Predict transporters. reactions, and all pathways
+
+./gapseq find -p all 3C2.fna #[code for predicting all reactions and pathways in a genome]
+./gapseq find-transport 3C2.fna #[code for predicting all transporters in a genome]
+./gapseq draft -r 9B2-all-Reactions.tbl -t 9B2-Transporter.tbl -p 9B2-all-Pathways.tbl -c 9B2.fna -u 200 -l 100 #[code for draft model preparation]
+./gapseq fill -m 9B2-draft.RDS -c 9B2-rxnWeights.RDS -g 9B2-rxnXgenes.RDS -n dat/media/ARE_MS_Vit.csv -b 100 #[code for gapfilling models]
