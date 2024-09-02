@@ -21,7 +21,7 @@ data_ggp <- data.frame(x = dat$interaction_score,                   # Create dat
 class(data_ggp)
 data_ggp2<-na.omit(data_ggp)
 data_ggp2
-cols<-c("#3399FF","#C0C0C0")
+cols<-c("#003366","#C0C0C0")
 ggp <- ggplot(data_ggp2, aes(x, fill = my_groups)) +  # Create ggplot2 histogram with default colors
   geom_histogram(color="black",alpha=0.5)+
   theme_classic()+
