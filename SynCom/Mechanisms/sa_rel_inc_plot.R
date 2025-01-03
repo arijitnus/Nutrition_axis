@@ -33,13 +33,13 @@ cs<-ggplot(dat,aes(x=factor(`S-medium`,levels=level_order2),y=Relative_increase)
   scale_fill_manual(values = cols)+
   theme_classic()+
   xlab("")+
-  ylab("Relative increase in biomass")+
+  ylab("Relative increase in shoot area to mock treatment")+
   theme(axis.text.x = element_text(size = 14),
         axis.text.y = element_text(size = 14),
         axis.title.y = element_text(size = 14),
         axis.title.x=element_text(size=14),
         axis.line = element_line(colour="black", size = 0.7))+
-  scale_y_continuous(limits = c(-0.5, 0.8), expand = expansion(mult = c(0, 0)))
+  scale_y_continuous(limits = c(-0.5, 0.6), expand = expansion(mult = c(0, 0)))
 q<-cs+geom_hline(yintercept = 0,linetype=2)+facet_grid(.~Treatment)
 q
 
@@ -49,7 +49,7 @@ ggsave(
   device = NULL,
   path = NULL,
   scale = 1,
-  width = 6,
+  width = 7,
   height = 6,
   units = "in",
   dpi = 400,
