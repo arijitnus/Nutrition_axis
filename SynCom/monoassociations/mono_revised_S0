@@ -1,0 +1,64 @@
+library(readxl)
+mono_dat<-read_excel('/Users/arijitmukherjee/Downloads/hm_all_pheno.xlsx',
+                     sheet="Sheet1",col_names = T,skip = 0)
+
+mono_dat<-as.data.frame(mono_dat)
+library(dplyr)
+#avg_mono<-mono_dat%>%group_by(Strains)%>%summarise(mean_rel=mean(rel_inc))
+#avg_mono
+
+cols<-c("#004C99","#99004C","#994C00")
+levels<-c("Proteobacteria","Actinobacteria","Firmicutes")
+mono_dat$Phyla<-factor(mono_dat$Phyla,levels = levels)
+
+mono_dat$
+
+
+# Calculate the mean and standard error for each group
+data_summary <- mono_dat %>%
+  group_by(Strains, Phyla) %>%
+  summarise(
+    mean_rel_rn = mean(rel_rn),  # mean of rel_bm
+    se_rel_rn = sd(rel_rn) / sqrt(n())  # standard error of rel_bm
+  )
+
+data_summary <- data_summary %>%
+  mutate(Strains = factor(Strains, levels = data_summary$Strains[order(data_summary$mean_rel_rn)]))
+
+range(data_summary$mean_rel_rn)
+range(data_summary$se_rel_rn)
+
+library(ggplot2)
+p1<-# Create the plot with lines and error bars
+  ggplot(data_summary, aes(x = Strains, y = mean_rel_rn, group = Phyla, color = Phyla)) + # Add lines for each group (Phylum)
+  geom_point() +  # Add points for each mean value
+  geom_errorbar(aes(ymin = mean_rel_rn - se_rel_rn, ymax = mean_rel_rn + se_rel_rn), 
+                width = 0.2) +  # Adderror bars (mean ± SE
+  geom_point(data = mono_dat, aes(x = Strains, y = rel_rn, color = Phyla),
+             shape = 16, alpha = 0.5, size = 2) +  
+  xlab("")+
+  theme_classic()+
+  scale_color_manual(values = cols)+
+  scale_fill_manual(values = cols)+
+  ylab("Relative change in root network to heat killed control")+
+  theme(axis.text.x = element_text(size = 14,angle = 40,hjust = 1),
+        axis.text.y = element_text(size = 14),
+        axis.title.y = element_text(size = 14),
+        axis.title.x=element_text(size=14),
+        axis.line = element_line(colour="black", size = 0.7),
+        strip.background = element_blank())+
+  scale_y_continuous(limits = c(-0.4, 0.6), expand = expansion(mult = c(0, 0)))
+q<-p1+geom_hline(yintercept = 0,linetype=2)
+q
+ggsave(
+  "relative_rn_mono.tiff",
+  plot = last_plot(),
+  device = NULL,
+  path = NULL,
+  scale = 1,
+  width = 8,
+  height = 5,
+  units = "in",
+  dpi = 400,
+)
+dev.off()
