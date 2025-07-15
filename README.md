@@ -1,2 +1,2 @@
-#'A cell-free bacterial signal coordinates plant-microbe fitness tradeoff to improve Sulfur deficiency tolerance in plants'
+#A cell-free bacterial signal coordinates plant-microbe fitness tradeoff to improve Sulfur deficiency tolerance in plants
 The folders- Figure 1 to 6 contain codes required to reproduce the main figures in the manuscript. All other folders contain codes for supplementary figures as well as analyses throughout the manuscript. If you require any information related to analyses and supplementary figures, please feel free to email me at arijitmukherjee@u.nus.edu. 
